@@ -1,8 +1,26 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import axios from "axios"
+import HmacSHA256 from 'crypto-js/sha256';
 
 export default function Home() {
+
+  function payMe(){    
+    const hash = HmacSHA256("merchant=onxQZvaVQZq&apikey=5cCuzYw1AOUKLFS69ruxRBC6qBAQWFBH&nonce=1386178459&to=1CkSCqyWGtVjok5A5xeGKKyMvpeZMnfEbq&fiat_amount=1", "HOSFvwa9pev8gMk3Cj6q6elKdwSkEPaL");
+    console.log("initiated", hash );
+    axios.get("https://paxful.com/wallet/pay", {
+      merchant:"onxQZvaVQZq", 
+      apikey:"e4sDZyCdWYBTcA6iuIR09ddgZCEOgEAq",
+      apiseal:hash,
+      nonce:1386178459,
+      to: "1CkSCqyWGtVjok5A5xeGKKyMvpeZMnfEbq",
+      amount: 1,
+    }).then(function(err){
+      console.log("ERROR", err)
+    })
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,43 +30,9 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div>
+          <h1>PAXFUL TEST</h1>
+          <button onClick={() => payMe()}>PAGAME</button>
         </div>
       </main>
 
