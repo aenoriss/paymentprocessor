@@ -1,10 +1,20 @@
+
 module.exports = {
   reactStrictMode: true,
-  async rewrites() {
+  async headers() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://api.example.com/:path*',
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Origin',
+            value: '/:path*'
+          }
+        ],
       },
     ]
   },

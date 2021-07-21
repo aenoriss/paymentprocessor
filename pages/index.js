@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {handler} from "../pages/api/hello"
+import axios from "axios"
 
 export default function Home() {
 
-  function payMe(){    
-    handler();
+  async function payMe () {    
+    await axios.post("http://localhost:3000/api/pay")
   }
 
   return (
